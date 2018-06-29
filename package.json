@@ -4,11 +4,12 @@
   "description": "23andMe API testing",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon serdver/server.js"
+    "start": "nodemon server/server.js"
   },
   "author": "Nick C.",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "mongoose": "^5.1.4"
