@@ -60,6 +60,41 @@ app.get("/variant", (req, res) => {
     });
 });
 
+// ========= Example Report =========
+//will return sample report object for the following catagories:
+// genetic_weight
+// wellness.alcohol_flush_reaction
+// wellness.caffeine_consumption
+// wellness.deep_sleep
+// wellness.lactose
+// wellness.muscle_composition
+// wellness.saturated_fat_and_weight
+// wellness.sleep_movement
+
+app.get("/report", (req, res) => {
+  axios
+    .get("https://api.23andme.com/3/report/")
+    .then(response => {
+      res.json(response.data);
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+});
+
+app.get("/gpri", (req, res) => {
+  axios
+    .get(
+      "https://api.23andme.com/3/genetic_phenotype_range_interaction/?predictor_id=linear_regression.gbmi.european_genetics_only_bmi_predictor"
+    )
+    .then(response => {
+      res.json(response.data);
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+});
+
 const server = app.listen(port, () => {
   console.log(`now listening on port ${port}! `);
 });
