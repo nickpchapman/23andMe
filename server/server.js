@@ -10,6 +10,7 @@ app.get("/", (req, res) => {
   res.send("23andMe API at your service. Try: /accession, /marker");
 });
 
+// ========== Accessions  ==========
 //will return base count of chromosome
 // "https://api.23andme.com/3/accession/?chromosome=1"
 //curl "https://api.23andme.com/3/accession/NC_000001.10"
@@ -24,18 +25,34 @@ app.get("/accession", (req, res) => {
     });
 });
 
-// will return a list of SNP markers for that gene(not full list in gene, must be list of snps used by 23andMe...): "https://api.23andme.com/3/marker/?gene_name=ACTN3"
-
+// ========== SNP Markers ==========
+// will return a list of reference SNP markers used in specified gene. Each marker contains an rs# and array of variant alleles: "https://api.23andme.com/3/marker/?gene_name=ACTN3"
 // will return a list of markers that match those ids: curl "https://api.23andme.com/3/marker/?id=rs10195681,i4001358"
 //  will return a list of markers on that chromosome: curl "https://api.23andme.com/3/marker/?accession_id=NC_012920.1"
+
 app.get("/marker", (req, res) => {
   axios
-    .get("https://api.23andme.com/3/marker/?gene_name=TP53")
+    .get("https://api.23andme.com/3/marker/?gene_name=ACTN3")
     .then(response => {
       console.log(
         "number of snps in this list =======> ",
         response.data.data.length
       );
+      res.json(response.data);
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+});
+
+// ========== SNP variants ==========
+// will return a list of ungrouped variant alleles for specified gene in asending order: "https://api.23andme.com/3/variant/?gene_name=ACTN3"
+//can also
+
+app.get("/variant", (req, res) => {
+  axios
+    .get("https://api.23andme.com/3/variant/?gene_name=ACTN3")
+    .then(response => {
       res.json(response.data);
     })
     .catch(function(error) {
